@@ -1,0 +1,9 @@
+Building XYLO
+
+See doc/readme-qt.rst for instructions on building XYLO QT,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of XYLO.
+
+See doc/build-*.txt for instructions on building XYLOd,
+the intended-for-services, no-graphical-interface, reference
+implementation of XYLO.
