@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = XYLO-qt
-VERSION = 2.2.0.1
+VERSION = 2.3.0.1
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += network printsupport
 DEFINES += ENABLE_WALLET

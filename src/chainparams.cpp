@@ -116,15 +116,16 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
 
-        vSeeds.push_back(CDNSSeedData("xylo","178.62.199.201"));
+        vSeeds.push_back(CDNSSeedData("xylo1","178.62.199.201"));
+        vSeeds.push_back(CDNSSeedData("xylo2","95.85.18.244"));
         convertSeeds(vFixedSeeds, pnSeed, ARRAYLEN(pnSeed), nDefaultPort);
 
         nPoolMaxTransactions = 3;
         //strSporkKey = "04815fc918ae312c96ea426062e38fb9fb8b6b979b4fb2cd18e1ee7be2ff46b7fd0230e958205acb76ae7b84acc25ec3f61621baf6a23e048568195525f43dedd6";
         //strMasternodePaymentsPubKey = "04815fc918ae312c96ea426062e38fb9fb8b6b979b4fb2cd18e1ee7be2ff46b7fd0230e958205acb76ae7b84acc25ec3f61621baf6a23e048568195525f43dedd6";
-        strDarksendPoolDummyAddress = "QLwNnfHu4y8j5htNmViVFd83ht8rNxdWUf";
+        strDarksendPoolDummyAddress = "XbFfPnXPFWHCQMBWsk8Wv4Psb8JHRU6Uxf";
         nLastPOWBlock = 0x7fffffff;
-        nPOSStartBlock = 30000;
+        nPOSStartBlock = 1001;
     }
 
     virtual const CBlock& GenesisBlock() const { return genesis; }
