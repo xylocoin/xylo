@@ -9,7 +9,7 @@
 #include "clientversion.h"
 
 //
-// Bootup the masternode, look for a 10000 XYLO input and register on the network
+// Bootup the masternode, look for a 1000 XYLO input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
