@@ -1425,7 +1425,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-const int targetReadjustment_forkBlockHeight = 230000;
+const int targetReadjustment_forkBlockHeight = 245000;
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
