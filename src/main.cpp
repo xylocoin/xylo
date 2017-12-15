@@ -1425,6 +1425,8 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
+const int targetReadjustment_forkBlockHeight = 300000;
+
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
 
@@ -1445,7 +1447,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if (nActualSpacing < 0) {
 	LogPrintf("Warning: spacing between blocks is negative. Resetting to target spacing.\n");
         nActualSpacing = TARGET_SPACING;
-    } else if (nActualSpacing < 1 && pindexLast->nHeight >= 180000) {
+    } else if (nActualSpacing < 1 && pindexLast->nHeight >= targetReadjustment_forkBlockHeight) {
 	nActualSpacing = 1;
     }
 
@@ -1453,9 +1455,9 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-    int64_t nInterval = TARGET_SPACING / nActualSpacing;
+    int64_t nInterval = 5; // Average over 5 blocks
 
-    if (pindexLast->nHeight < 180000) {
+    if (pindexLast->nHeight < targetReadjustment_forkBlockHeight) {
         // Allow different difficulty in old blocks before height 180000.
         nInterval = 1;
     }
