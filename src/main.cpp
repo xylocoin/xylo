@@ -1448,6 +1448,9 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 	LogPrintf("Warning: spacing between blocks is negative. Resetting to target spacing.\n");
         nActualSpacing = TARGET_SPACING;
     } else if (nActualSpacing < 1 && pindexLast->nHeight >= targetReadjustment_forkBlockHeight) {
+        // For a smooth transition to the new readjustment algorithm set actual spacing close to TARGET_SPACING for 100 blocks.
+	nActualSpacing = TARGET_SPACING - 1;
+    } else if (nActualSpacing < 1 && pindexLast->nHeight >= (targetReadjustment_forkBlockHeight + 100)) {
 	nActualSpacing = 1;
     }
 
