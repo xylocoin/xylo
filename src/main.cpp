@@ -1425,7 +1425,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-const int targetReadjustment_forkBlockHeight = 245000;
+const int targetReadjustment_forkBlockHeight = 400000;
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
@@ -1449,7 +1449,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         nActualSpacing = TARGET_SPACING;
     } else if (nActualSpacing < 1 && pindexLast->nHeight >= targetReadjustment_forkBlockHeight) {
         // For a smooth transition to the new readjustment algorithm set actual spacing close to TARGET_SPACING for 100 blocks.
-	nActualSpacing = TARGET_SPACING - 1;
+	nActualSpacing = TARGET_SPACING - 10;
     } else if (nActualSpacing < 1 && pindexLast->nHeight >= (targetReadjustment_forkBlockHeight + 100)) {
 	nActualSpacing = 1;
     }
@@ -1461,7 +1461,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64_t nInterval = 5; // Average over 5 blocks
 
     if (pindexLast->nHeight < targetReadjustment_forkBlockHeight) {
-        // Allow different difficulty in old blocks before height 180000.
+        // Allow different difficulty in old blocks before the fork.
         nInterval = 1;
     }
 
