@@ -1,0 +1,10 @@
+
+\.qmake\.stash
+
+*.o
+
+build/
+
+*.qm
+
+src/secp256k1/build-aux/
