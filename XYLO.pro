@@ -1,7 +1,7 @@
 QMAKE_LRELEASE = /Qt/qttools-everywhere-src-5.10.0/bin/lrelease
 TEMPLATE = app
 TARGET = XYLO-qt
-VERSION = 2.5.0.1
+VERSION = 2.5.1.1
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += network printsupport
 DEFINES += ENABLE_WALLET
