@@ -1417,8 +1417,6 @@ int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, i
     return nSubsidy + nFees;
 }
 
-static int64_t nTargetTimespan = 2 * 60;  // 2 minute
-
 // ppcoin: find last block index up to pindex
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake)
 {
@@ -1426,6 +1424,8 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
         pindex = pindex->pprev;
     return pindex;
 }
+
+const int targetReadjustment_forkBlockHeight = 400000;
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
@@ -1444,20 +1444,34 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    if (nActualSpacing < 0){
+    if (nActualSpacing < 0) {
+	LogPrintf("Warning: spacing between blocks is negative. Resetting to target spacing.\n");
         nActualSpacing = TARGET_SPACING;
+    } else if (nActualSpacing < 1 && pindexLast->nHeight >= targetReadjustment_forkBlockHeight) {
+        // For a smooth transition to the new readjustment algorithm set actual spacing close to TARGET_SPACING for 100 blocks.
+	nActualSpacing = TARGET_SPACING - 10;
+    } else if (nActualSpacing < 1 && pindexLast->nHeight >= (targetReadjustment_forkBlockHeight + 100)) {
+	nActualSpacing = 1;
     }
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-    int64_t nInterval = nTargetTimespan / TARGET_SPACING;
+    int64_t nInterval = 5; // Average over 5 blocks
+
+    if (pindexLast->nHeight < targetReadjustment_forkBlockHeight) {
+        // Allow different difficulty in old blocks before the fork.
+        nInterval = 1;
+    }
+
     bnNew *= ((nInterval - 1) * TARGET_SPACING + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * TARGET_SPACING);
 
-    if (bnNew <= 0 || bnNew > bnTargetLimit)
+    if (bnNew <= 0 || bnNew > bnTargetLimit) {
+	LogPrintf("Warning: new difficulty target out of range. Resetting to minimum difficulty.\n");
         bnNew = bnTargetLimit;
+    }
 
     return bnNew.GetCompact();
 }
