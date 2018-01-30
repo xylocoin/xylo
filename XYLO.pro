@@ -1,6 +1,7 @@
+QMAKE_LRELEASE = /Qt/qttools-everywhere-src-5.10.0/bin/lrelease
 TEMPLATE = app
 TARGET = XYLO-qt
-VERSION = 2.4.0.1
+VERSION = 2.5.1.1
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += network printsupport
 DEFINES += ENABLE_WALLET
@@ -38,8 +39,9 @@ windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system-mt -lboost_filesystem-mt -lboost_program_options-mt -lboost_thread_win32-mt
-BOOST_LIB_SUFFIX=-mt
+#LIBS += -lboost_system-mt -lboost_filesystem-mt -lboost_program_options-mt -lboost_thread_win32-mt
+#BOOST_LIB_SUFFIX=-mt
+BOOST_LIB_SUFFIX=-mgw72-mt-s-1_57
 BOOST_INCLUDE_PATH=C:/deps/boost_1_57_0
 BOOST_LIB_PATH=C:/deps/boost_1_57_0/stage/lib
 BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
@@ -52,8 +54,8 @@ LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
 LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
 QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
 QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
-SECP256K1_LIB_PATH = C:/deps/secp256k1/.libs
-SECP256K1_INCLUDE_PATH = C:/deps/secp256k1/include
+SECP256K1_LIB_PATH = src/secp256k1/.libs
+SECP256K1_INCLUDE_PATH = src/secp256k1/include
 #SECP256K1_INCLUDE_PATH = C:/deps/secp256k1
 }
 
@@ -508,7 +510,7 @@ isEmpty(BOOST_LIB_SUFFIX) {
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
     #BOOST_THREAD_LIB_SUFFIX = $$BOOST_LIB_SUFFIX
-    win32:BOOST_THREAD_LIB_SUFFIX = _win32$$BOOST_LIB_SUFFIX
+    win32:BOOST_THREAD_LIB_SUFFIX = $$BOOST_LIB_SUFFIX
     else:BOOST_THREAD_LIB_SUFFIX = $$BOOST_LIB_SUFFIX
 }
 
@@ -622,7 +624,7 @@ windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
     INCLUDEPATH += $$SECP256K1_INCLUDE_PATH
     LIBS += $$join(SECP256K1_LIB_PATH,,-L,) -lsecp256k1
 }
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
+LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX
 windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {
