@@ -35,7 +35,12 @@ namespace Checkpoints
     (     90000, uint256("0x8ec564d90a249490cc12a54dd88657607864d0bd354e6a633f9143604bf69293") )
     (     100000, uint256("0x80a1f3f49405975e3013beec54d7e9990ee9712f8140e0d43fede39aa39abb00") )
     (     105000, uint256("0xea46517cc02e803376c0517ad4cb34896e2e7ab322597113bc2eb6dda17a55c3") )
-    
+    (     150000, uint256("0xfc0ac99bd20f8f1b8213c0ecb17d695f9bc2bbfd4cee1fbd56fd9f4e26f2147d") )
+    (     200000, uint256("0x2d795789def425927b0e44228f508c37ecda88ad029424c87db41d75250e2339") )
+    (     250000, uint256("0x19bbba86466cc00cbd221fdf3bfcbf4a1b70ed46523a24ed0ccad17cfd93470a") )
+    (     300000, uint256("0x42d07c66362c99aa5d9bd400e51d62eca81085d2556b6adedc4cd437e38602f2") )
+    (     350000, uint256("0x34c3eeec4447038df491b80fa8c464706eea146b11919e97caafc5224b89c129") )
+    (     400000, uint256("0xc99286a2ff482b34c9a9b950b6bca833edb46db293ab477a49f135816386368b") )
     ;
 
     // TestNet has no checkpoints
@@ -73,7 +78,7 @@ namespace Checkpoints
         return NULL;
     }
 
-    // Automatically select a suitable sync-checkpoint 
+    // Automatically select a suitable sync-checkpoint
     const CBlockIndex* AutoSelectSyncCheckpoint()
     {
         const CBlockIndex *pindex = pindexBest;
